@@ -1,7 +1,7 @@
 #Prints the user's age
 def PrintName():
-    age = input("How old are you?")
-    print("Age: " + age)   
+    age = 30
+    print("Age: " + str(age))  
 
 #Add 2 numbers      
 
