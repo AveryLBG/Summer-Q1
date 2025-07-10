@@ -58,16 +58,18 @@ nav ul li a:hover::after {
    width: 100%;
 }
 .header-text{
-    margin-left: -4%;
-    margin-top: 47%;
-    font-size: 0px;
+    margin-top: 30%;
+    font-size: 30px;
 }
 .header-text h1{
     font-size: 60px;
     margin-top: 20px;
 }
-.header-text h1 span {
-    color: indianred;
+.header-text h1 span{
+    color: rgb(255, 78, 2);
+}
+#CA{
+    color: rgb(165, 170, 245);
 }
 /*------------about-----------*/
 #about{
