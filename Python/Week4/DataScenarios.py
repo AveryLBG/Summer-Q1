@@ -59,9 +59,33 @@ for month in months:
 
 print("Scenario 4: All the items in your backpack")
 print("A set would be best, the items are in no particular order")
-backpack ={"Pencils", "Books", "Computer", "Charger", "Folder"}
+backpack = {"Pencils", "Books", "Computer", "Charger", "Folder"}
 for item in backpack:
     print(item)
-prin
+
+print("Scenario 5: Look up Student emails by their names.")
+print("A dicionary would be best, as names are paired with emails.")
+
+emails = {
+    "Avery": "avery.garner@wccschools.org",
+    "Camryn": "camryn.garner@wccschools.org",
+    "Lucas": "lucas.atalkiti@wccschools.org"
+}
+for name, email in emails.items():
+    print(name, ": ", email )
+
+print("Scenario 6: A shopping cart of groceries.")
+print("A set would work, the items are in no particular order.")
+cart = {"Milk", "Eggs", "Bacon", "Salt"}
+for item in cart:
+    print(item)
+
+print("Scenario 7: Tickets in a hat for a raffle.")
+print("A set is best, since there is no indexing you can't rig it as easily")
+
+hat = {"Avery", "Kauri", "Marshawn", "Semaj", "Jeffrey", "Joaquin", "Cyrus"}
+for person in hat:
+    print(person)
+
 
 
