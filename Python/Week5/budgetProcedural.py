@@ -28,11 +28,21 @@ def Spend(name, amount):
     return budgeted - spent
 
 def PrintBudget():
+    print("Budget               Budgeted      Spent    Remaining")
+    print("----------------------------------------------------------------")
+    totalBudgeted = 0
+    totalSpent = 0
+    totalRemaining = 0
     for name in budgets:
         budgeted = budgets[name]#calculate the amount budgeted
         spent = expenses[name]#calculate the amount spent
         remainingBudget = budgeted - spent #calculate the difference between the two.
         print(f'{name:15s},  {budgeted:10.2f}, {spent:10.2f}, {remainingBudget:10.2f}')
+        totalBudgeted += budgeted
+        totalSpent += spent
+        totalRemaining = remainingBudget
+
+    print(f'{"Total":15s},  {totalBudgeted:10.2f}, {totalSpent:10.2f}, {totalBudgeted - totalSpent:10.2f}')
 
 
 print("Total Funds: ", funds)
