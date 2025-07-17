@@ -67,14 +67,40 @@
         </div>
     </div>
     <!--About End-->
+    <!--Services Start-->
+    <div id="services">
+        <div class="container">
+            <h1 class="sub-title">My Services</h1>
+            <div class="services-list">
+                <div>
+                    <h2>Web Design</h2>
+                    <p>I don't do services for people, sorry, maybe if I know you personally but still probably not</p>
+                </div>    
+                <div>
+                    <h2>Game Development</h2>
+                    <p>Most of my games are purely made for myself.</p>
+                </div>    
+                <div>
+                    <h2>Sketches & Digital Art</h2>
+                    <p>I'm not good enough for commisions yet, sorry!</p>
+                </div>    
+            </div>
+        </div>
+    </div>
 <script>
 
     var tablinks = document.getElementsByClassName("tab-links");
     var tabcontents = document.getElementsByClassName("tab-contents");
+
     function opentab(tabname){
         for(tablink of tablinks){
-            tablink.classlist.remove()
+            tablink.classList.remove("active-link");
         }
+        for(tabcontent of tabcontents){
+            tabcontent.classList.remove("active-tab");
+        }
+        event.currentTarget.classList.add("active-link");
+        document.getElementById(tabname).classList.add("active-tab")
     }
 
 </script>
