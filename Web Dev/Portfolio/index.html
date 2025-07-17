@@ -20,7 +20,6 @@
                 </ul>
             </nav>
             <div class="header-text">
-             
                 <h1>Hi, I'm <span>Avery Garner</span>, How's it goin?</h1>
             </div>
         </div>
@@ -35,11 +34,49 @@
                     <img src="images/SelfPhoto.png" >
                 </div>
                 <div class="about-col-2">
-                    <h1>About Me</h1>
+                    <h1 class="sub-title">About Me</h1>
+                    <p><span id="Dante">"Abandon all hope, ye who enter here."</span> <br> <br> Hi I'm Avery, an aspiring artist and game developer from California. I also like gardening and want to learn cooking. Some of my favorite games are Rain World and Ultrakill.</p> 
+                    <div class="tab-titles">
+                        <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
+                        <p class="tab-links" onclick="opentab('experience')">Experience</p>
+                        <p class="tab-links" onclick="opentab('education')"> Education</p>
+                    </div>
+                    <div class="tab-contents active-tab" id="skills">
+                        <ul>
+                            <li><span>Programming</span><br>Game Dev</li>
+                            <li><span>Art</span><br>Drawing & Design</li>
+                            <li><span>Web Development</span><br>Website Creation</li>
+                        </ul>
+                    </div>
+                    <div class="tab-contents" id="experience">
+                        <ul>
+                            <li><span>2025-Current</span><br>Casual Godot Usage</li>
+                            <li><span>2022-Current</span><br>Personal Art Studies</li>
+                            <li><span>2025-Current</span><br>Hidden Genius Project</li>
+                        </ul>
+                    </div>
+                    <div class="tab-contents" id="education">
+                        <ul>
+                            <li><span>2025</span><br>Hercules Middle School</li>
+                            <li><span>2025</span><br>Hidden Genius Project</li>
+                            <li><span>2020</span><br>West Contra Costa Elementary Python Course</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <!--About End-->
+<script>
+
+    var tablinks = document.getElementsByClassName("tab-links");
+    var tabcontents = document.getElementsByClassName("tab-contents");
+    function opentab(tabname){
+        for(tablink of tablinks){
+            tablink.classlist.remove()
+        }
+    }
+
+</script>
 </body>
 </html>
