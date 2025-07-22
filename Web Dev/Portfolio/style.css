@@ -50,7 +50,7 @@ nav ul li a {
     
 }
 nav ul div {
-    background-color: #4baeff;
+    background-color:#404075;
     height: 150px;
     width: 200px;
     position: relative;
@@ -114,6 +114,7 @@ nav ul li a::after {
 .about-col-1 img {
     border-radius: 15px;
     height: 512px;
+    transition: 0.5s;
 }
 .about-col-2 {
     flex-basis: 60%;
@@ -192,4 +193,50 @@ nav ul li a::after {
     font-size: 13px;
     font-weight: 500;
     border-radius: 15px;
+    transition: 0.2s;
 }
+.services-list div:hover {
+    transform: translateY(-10px);
+    background-color: rgb(63, 53, 255);
+    box-shadow: 0px 10px black;
+}
+/*--------------------gallery----------*/
+
+#Gallery {
+    display: flex;
+    flex-wrap: wrap;
+}
+#Gallery img{
+    border-radius: 10px;
+    height: 300px;
+    margin-bottom: 20px;
+    margin-right: 30px;
+    transition: 0.2s;
+}
+#Gallery img:hover{
+
+    box-shadow: 0px 40px #fff;
+}
+
+#Gallery div {
+    margin-bottom: 20px;
+    margin-right: 30px;
+    transition: 0.2s;
+}
+#Gallery div p {
+    font-size: small;
+    color: #282832;
+    margin-top: -10px;
+    margin-bottom: 15px;
+    margin-left: 5px;
+    font-weight: bolder;
+}
+/*----------------contact-------------------*/
+.row2 {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background-color: #1a1d2e;
+    border-radius: 15px;
+}
+    
