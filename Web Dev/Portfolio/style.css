@@ -239,4 +239,25 @@ nav ul li a::after {
     background-color: #1a1d2e;
     border-radius: 15px;
 }
-    
+.contact-left {
+    flex-basis: 35%;
+}
+.contact-right {
+    flex-basis: 60%;
+}
+.contact-left p {
+    margin-top: 15px;
+}
+.social-icons a {
+    transition: transform 0.5s;
+}
+.social-icons a:hover{
+   transform: translateY(-5px);
+}
+.btn {
+    display: inline-block;
+    background: rgb(255, 81, 81);
+    text-decoration: none;
+    padding: 20px;
+    border-radius: 10px;
+}
