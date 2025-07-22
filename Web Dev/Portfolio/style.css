@@ -185,7 +185,7 @@ nav ul li a::after {
 }
 .icons {
     height: 40px;
-    margin-top: -20px;
+    margin-top: 0px;
 }
 .services-list div{
     background-color: #50506d;
