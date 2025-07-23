@@ -14,6 +14,7 @@ body {
     background-image: url("images/Majestic_view.jpg");
     background-size: 100%;
     background-position: center;
+   
 }
 .container {
     padding: 10px 5%;
@@ -247,17 +248,86 @@ nav ul li a::after {
 }
 .contact-left p {
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 .social-icons a {
     transition: transform 0.5s;
+    filter: brightness(100%);
 }
-.social-icons a:hover{
-   transform: translateY(-5px);
+.social-icons a .icons:hover{
+    transition: transform 0.3s;
+    transform: translateY(-5px);
+    filter: brightness(70%);
 }
 .btn {
+    border: none;
     display: inline-block;
     background: rgb(255, 81, 81);
     text-decoration: none;
     padding: 20px;
     border-radius: 10px;
+    color: rgb(255, 255, 255);
+    transition: 0.2s;
+}
+.contact-right form{
+    width: 100%;
+}
+form input, form textarea{
+    width: 100%;
+    border: 0;
+    outline: none;
+    background: #50506d;
+    padding: 15px;
+    margin: 10px 0;
+    color: #282832;
+    font-size: 18px;
+    border-radius: 6px;
+
+}
+.btn:hover{
+    color: #50506d;
+    background: white;
+}
+form .btn{
+    padding: 14px 60px;
+    font-size: 18px;
+    margin-top: 0px;
+    cursor: pointer;
+}
+.copyright {
+    width: 100%;
+    text-align: center;
+    padding: 25px 0;
+    background: #141726;
+    font-weight: 300;
+    margin-top: -15px;
+}
+
+/*------------------css for small screens-------------------*/
+@media only screen and (max-width:600px) {
+    
+    #header{
+        background-color: url(images/Majestic_view.jpg);
+        background-size: 100%;
+        background-repeat: no-repeat;
+    }
+    .header-text{
+        margin-top: 100%;
+        font-size: 16px;
+    }
+    .header-text h1{
+        font-size: 30px;
+    }
+    nav ul div{
+        height: 100px;
+        top: 10px;
+        padding-top: -25px;
+        padding-bottom: -25px;
+    }
+    nav{
+        height: 80px;
+    }
+    .header-text{
+        transform: translateX(-20px);
+    }
 }
