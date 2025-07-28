@@ -310,3 +310,7 @@ form .btn{
     font-weight: 300;
     margin-top: -15px;
 }
+#msg {
+    color: #f00e0e;
+    display: block;
+}
