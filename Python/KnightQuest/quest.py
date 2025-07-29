@@ -1,30 +1,34 @@
 import pgzrun
+import time 
+import random
+
 
 GRID_WIDTH = 27 #game width in tiles OG WIDTH = 16
 GRID_HEIGHT = 17 #game height in tiles OG HEIGHT = 12
 GRID_SIZE = 50 # the size of each tile in pixels
+GUARDMOVEINTERVAL = 0.25 #The interval at which each guard moves
 
 WIDTH = GRID_WIDTH * GRID_SIZE # The width of a tile
 HEIGHT = GRID_HEIGHT * GRID_SIZE # the height of a tile
 
-MAP = [  
+MAP = [
     'WWWWWWWWWWWWWDWWWWWWWWWWWWW',            
     'W                         W',
     'W                         W',
+    'WGW                     WGW',
+    'WW                       WW',
+    'W  GWWWWWWWW   WWWWWWWWG  W',
     'W                         W',
-    'W   WWWWWWWW K WWWWWWWW   W',
-    'W                         W',
-    'W   G                 G   W',
-    'W   WWWWWWWWWWWWWWWWWWW   W',
-    'W                         W',
-    'W                         W',
-    'W            K            W',
-    'W                         W',
-    'W                         W',
-    'W        G       G        W',
-    'W          W   W          W',
-    'WK         W P W         KW',
-    'WWWWWWWWWWWWWWWWWWWWWWWWWWWW',]
+    'W WWWWWWWWWWWWWWWWWWWWWWW W',
+    'W W                     W W',
+    'W W                     W W',
+    'WGW          K          WGW',
+    'W W                     W W',
+    'W W                     W W',
+    'W W                     W W',
+    'W WWWWWWWWWW   WWWWWWWWWW W',
+    'WK           P           KW',
+    'WWWWWWWWWWWWWWWWWWWWWWWWWWW',]
 
 
 #OG MAP =[
@@ -55,8 +59,10 @@ def SetupGame():
     global player #define player as global
     global keysToCollect #A variable to to store the keys that the player must collect
     global gameOver 
+    global guards
     player = Actor("player", anchor=("left", "top")) #Create an actor for any moving objects player
     keysToCollect = []
+    guards = []
     gameOver = False
     for y in range(GRID_HEIGHT):
         for x in range(GRID_WIDTH):
@@ -70,6 +76,11 @@ def SetupGame():
                 key.pos = GetScreenCoords(x, y)
                 #Add key to list
                 keysToCollect.append(key)
+            elif square == 'G':
+                #Create actor for the guard
+                guard = Actor("guard", anchor=("left","top"), pos = GetScreenCoords(x, y))
+                #Add guard to list
+                guards.append(guard)
 
 #Draw walls
 def DrawScenery():
@@ -88,12 +99,16 @@ def DrawActors():#Draw entities
     player.draw()
     for key in keysToCollect:
         key.draw()
+    for guard in guards:
+        guard.draw()
 
 def draw(): #Draws everything USE 'draw', not 'Draw', 'draw' is built in
+    global GUARDMOVEINTERVAL
     screen.clear()
     DrawBackground()
     DrawScenery()
     DrawActors()
+    GUARDMOVEINTERVAL = random.uniform(0.1, 0.3)
     if gameOver:
         DrawGameOver()
 
@@ -137,5 +152,35 @@ def DrawGameOver():
     #Draw game over
     screen.draw.text("Game Over", midbottom = screenMiddle, fontsize = GRID_SIZE*2, color="cyan", owidth=1)
 
+def MoveGuard(guard):
+    global gameOver
+    if gameOver:
+        return
+    
+    (playerX, playerY) = GetActorGridPos(player)#Get the positions of the guard and player.
+    (guardX, guardY) = GetActorGridPos(guard)
+    
+    #Check which direction the player is, and if there is a wall in the way
+    if playerX > guardX and MAP[guardY][guardX+1] != 'W':
+        guardX += 1
+    if playerX < guardX and MAP[guardY][guardX-1] != 'W':
+        guardX -= 1
+    if playerY > guardY and MAP[guardY+1][guardX] != 'W':
+        guardY += 1
+    if playerY < guardY and MAP[guardY-1][guardX] != 'W':
+        guardY -= 1
+    #update the guard position on screen
+    guard.pos = GetScreenCoords(guardX, guardY)
+    #Check if the guard and player are in the same position
+    if guardX == playerX and guardY == playerY:
+        gameOver = True
+
+def MoveGuards():
+    for guard in guards:
+        MoveGuard(guard)
+
+
 SetupGame()
+pgzrun.go()
+clock.schedule_interval(MoveGuards, GUARDMOVEINTERVAL)
 pgzrun.go()
