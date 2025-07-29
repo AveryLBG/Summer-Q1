@@ -6,7 +6,7 @@ import random
 GRID_WIDTH = 27 #game width in tiles OG WIDTH = 16
 GRID_HEIGHT = 17 #game height in tiles OG HEIGHT = 12
 GRID_SIZE = 50 # the size of each tile in pixels
-GUARDMOVEINTERVAL = 0.25 #The interval at which each guard moves
+GUARDMOVEINTERVAL = 0.22 #The interval at which each guard moves
 
 WIDTH = GRID_WIDTH * GRID_SIZE # The width of a tile
 HEIGHT = GRID_HEIGHT * GRID_SIZE # the height of a tile
@@ -15,8 +15,8 @@ MAP = [
     'WWWWWWWWWWWWWDWWWWWWWWWWWWW',            
     'W                         W',
     'W                         W',
-    'WGW                     WGW',
-    'WW                       WW',
+    'W                         W',
+    'W                         W',
     'W  GWWWWWWWW   WWWWWWWWG  W',
     'W                         W',
     'W WWWWWWWWWWWWWWWWWWWWWWW W',
@@ -103,12 +103,10 @@ def DrawActors():#Draw entities
         guard.draw()
 
 def draw(): #Draws everything USE 'draw', not 'Draw', 'draw' is built in
-    global GUARDMOVEINTERVAL
     screen.clear()
     DrawBackground()
     DrawScenery()
     DrawActors()
-    GUARDMOVEINTERVAL = random.uniform(0.1, 0.3)
     if gameOver:
         DrawGameOver()
 
@@ -176,8 +174,17 @@ def MoveGuard(guard):
         gameOver = True
 
 def MoveGuards():
+    global GUARDMOVEINTERVAL
+    
     for guard in guards:
+        staggerchance = random.randrange(1, 16)
+        if staggerchance == 1:
+            return
+
         MoveGuard(guard)
+        
+       
+        
 
 
 SetupGame()
