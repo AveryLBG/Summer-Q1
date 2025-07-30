@@ -223,6 +223,15 @@ nav ul li a::after {
     transition: 0.2s;
    
 }
+#games img{
+    height: 190px;
+}
+#games div p {
+    font-size: xx-small;
+}
+#games img:hover{
+    box-shadow: 0px 30px #6a6a95;
+}
 .Gallery img:hover{
     box-shadow: 0px 40px #6a6a95;
     border: 5px solid #6a6a95;
@@ -301,6 +310,9 @@ form .btn{
     font-size: 18px;
     margin-top: 0px;
     cursor: pointer;
+}
+.btn:active{
+    transform: scale(0.95);
 }
 .copyright {
     width: 100%;
