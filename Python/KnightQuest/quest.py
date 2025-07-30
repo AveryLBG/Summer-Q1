@@ -1,17 +1,20 @@
 import pgzrun
 import time 
 import random
-
-
+img2 = False
+level = 0
+staggerchance = 1
 GRID_WIDTH = 27 #game width in tiles OG WIDTH = 16
 GRID_HEIGHT = 17 #game height in tiles OG HEIGHT = 12
 GRID_SIZE = 50 # the size of each tile in pixels
 GUARDMOVEINTERVAL = 0.25 #The interval at which each guard moves
+PLAYERMOVEINTERVAL = 0.1
 
 WIDTH = GRID_WIDTH * GRID_SIZE # The width of a tile
 HEIGHT = GRID_HEIGHT * GRID_SIZE # the height of a tile
-
-MAP = [
+BACKGROUND_SEED = 12345
+MAPS = [
+    [
     'WWWWWWWWWWWWWDWWWWWWWWWWWWW',            
     'W                         W',
     'W                         W',
@@ -28,9 +31,48 @@ MAP = [
     'W W                     W W',
     'W WWWWWWWWWW   WWWWWWWWWW W',
     'WK           P           KW',
-    'WWWWWWWWWWWWWWWWWWWWWWWWWWW',]
+    'WWWWWWWWWWWWWWWWWWWWWWWWWWW',],
+    [
+    'WWWWWWWWWWWWWDWWWWWWWWWWWWW',            
+    'WGGGGGGGGGGGGGGGGGGGGGGGGGW',
+    'WG           K           GW',
+    'WG                       GW',
+    'WG                       GW',
+    'WG                       GW',
+    'WG                    K  GW',
+    'W                         W',
+    'W                         W',
+    'W  K                      W',
+    'W                         W',
+    'W                         W',
+    'W                         W',
+    'W             P           W',
+    'W                         W',
+    'W                        KW',
+    'WWWWWWWWWWWWWWWWWWWWWWWWWWW',],
+    [
+    'WWWWWWWWWWWWWDWWWWWWWWWWWWW',            
+    'WWWWWWWWWWWW   WWWWWWWWWWWW',
+    'WKGW                   WGKW',
+    'WGGW                   WGGW',
+    'WGGW                   WGGW',
+    'WGGW                   WGGW',
+    'WGGW                   WGGW',
+    'WGGW                   WGGW',
+    'W                         W',
+    'WGGW                   WGGW',
+    'WWWWWWWWWWWWW WWWWWWWWWWWWW',
+    'W                         W',
+    'W                         W',
+    'W                         W',
+    'W                         W',
+    'W            P            W',
+    'WWWWWWWWWWWWWWWWWWWWWWWWWWW',],
 
+]
+MAP = MAPS[level]
 
+    
 #OG MAP =[
 #    'WWWWWWWWDWWWWWWW',
 #    'W              W',
@@ -53,17 +95,26 @@ def GetScreenCoords(x, y):
 def DrawBackground():
     for y in range (GRID_HEIGHT): #loops through each row
         for x in range(GRID_WIDTH): #loops through each column
-            screen.blit("floor1", GetScreenCoords(x, y)) #Draws the image at the given position
+            if x % 2 == y % 2:
+                screen.blit("floor1", GetScreenCoords(x, y)) #Draws the image at the given position
+            else:
+                screen.blit("floor2", GetScreenCoords(x, y)) #Draws the image at the given position
 
 def SetupGame():
     global player #define player as global
     global keysToCollect #A variable to to store the keys that the player must collect
     global gameOver 
     global guards
+    global playerWon
+    global MAP
+    global level
+
+
     player = Actor("player", anchor=("left", "top")) #Create an actor for any moving objects player
     keysToCollect = []
     guards = []
     gameOver = False
+    playerWon = False
     for y in range(GRID_HEIGHT):
         for x in range(GRID_WIDTH):
             square = MAP[y][x]#Gets the character from the MAP var
@@ -102,6 +153,8 @@ def DrawActors():#Draw entities
     for guard in guards:
         guard.draw()
 
+    
+
 def draw(): #Draws everything USE 'draw', not 'Draw', 'draw' is built in
     screen.clear()
     DrawBackground()
@@ -110,8 +163,16 @@ def draw(): #Draws everything USE 'draw', not 'Draw', 'draw' is built in
     if gameOver:
         DrawGameOver()
 
+
 def MovePlayer(dx, dy):
     global gameOver
+    global playerWon
+    global img2
+    Pframe = random.randrange(1,3)
+    if Pframe == 1:
+        player.image = "player"
+    else:
+        player.image = "player2"
     if gameOver: #if the game is over
         #stop the player from moving by breaking the function
         return
@@ -126,15 +187,30 @@ def MovePlayer(dx, dy):
             return
         else:
             gameOver = True
+            playerWon = True
     for key in keysToCollect:
         (keyX, keyY) = GetActorGridPos(key)#get the grid position of the current key
         if x ==keyX and y == keyY: #Checks if the player is touching the key
             keysToCollect.remove(key)
             break
+        #animate(player, pos=GetScreenCoords(x,y), duration=PLAYERMOVEINTERVAL)
     player.pos = GetScreenCoords(x,y) #Prints the player at their new coordinate
+    
 
 def on_key_down(key):
-    dir = ''
+    global player
+    global MAP
+    global level
+    if key == keys.SPACE and gameOver:#restart the game
+        if not playerWon:
+            SetupGame()
+        else:
+            level += 1
+            MAP = MAPS[level]
+            DrawScenery()
+            DrawActors()
+            SetupGame()
+            
     if key == keys.LEFT:
         MovePlayer(-1, 0)
     elif key == keys.UP:
@@ -149,7 +225,10 @@ def DrawGameOver():
     screenMiddle = (WIDTH/2, HEIGHT/2)
     #Draw game over
     screen.draw.text("Game Over", midbottom = screenMiddle, fontsize = GRID_SIZE*2, color="cyan", owidth=1)
-
+    if playerWon:
+        screen.draw.text("YOU WIN", midtop = screenMiddle, fontsize = GRID_SIZE*2, color="green", owidth=1)
+    else:
+        screen.draw.text("YOU LOSE", midtop = screenMiddle, fontsize = GRID_SIZE*2, color="red", owidth=1)
 def MoveGuard(guard):
     global gameOver
     if gameOver:
@@ -167,16 +246,22 @@ def MoveGuard(guard):
         guardY += 1
     if playerY < guardY and MAP[guardY-1][guardX] != 'W':
         guardY -= 1
-    #update the guard position on screen
-    guard.pos = GetScreenCoords(guardX, guardY)
+
+    
+    #update the guard position on screen and animate him
+    animate(guard, pos=GetScreenCoords(guardX, guardY), duration=GUARDMOVEINTERVAL/3)
+    #guard.pos = GetScreenCoords(guardX, guardY)
     #Check if the guard and player are in the same position
     if guardX == playerX and guardY == playerY:
         gameOver = True
 
 def MoveGuards():
     global GUARDMOVEINTERVAL
+    global staggerchance
+    staggerchance = random.randrange(1,7)
     for guard in guards:
         MoveGuard(guard)
+        
         
        
         
